@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {Button, Pressable, ScrollView, StyleSheet} from 'react-native';
+import { TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 
-import {Text, View} from '../components/Themed';
-import {useState} from "react";
-import {FlatList} from "react-native-gesture-handler";
+import { Text, View } from '../components/Themed';
+import { useState } from "react";
+import { FlatList } from "react-native-gesture-handler";
 
-export default function RepositoriesView({route, navigation}) {
+export default function RepositoriesView({ route, navigation }) {
 
-    const {info} = route.params
+    const { info } = route.params
     const [ToRM, setToRM] = useState(true);
 
     const [Branches, setBranches] = useState([]);
@@ -43,33 +43,51 @@ export default function RepositoriesView({route, navigation}) {
         <View style={styles.container}>
             <ScrollView>
                 <Text style={styles.title}>{info.full_name}</Text>
-                <View style={{marginRight: 20, marginLeft: 20, flex: 1, height: 1, backgroundColor: '#979797'}}/>
-                <Text style={styles.text}>Language : {info.language}</Text>
-                <Text style={styles.text}>Description : {info.description}</Text>
-                <Text style={styles.text}> Autorisation : {info.private ? "private" : "public"}</Text>
-                <Text style={styles.text}> Fork : {info.fork ? "fork" : "not fork"}</Text>
-                <Text style={styles.text}> Size : {info.size}</Text>
-                <Text style={styles.text}> Default Branche Name : {info.default_branch}</Text>
-                <Text style={styles.title}>Branches</Text>
-                <View style={{margin: 20, flex: 1, height: 1, backgroundColor: '#979797'}}/>
+                <View style={{ marginRight: 20, marginLeft: 20, marginBottom: 10, flex: 1, height: 1, backgroundColor: '#979797' }} />
+                <Text style={styles.text}>
+                    <Text style={styles.label}>Language: </Text>
+                    <Text style={styles.white}>{info.language}</Text>
+                </Text>
+                <View style={styles.black}>
+                    <Text style={styles.label}>Description: </Text>
+                    <Text style={styles.white}>{info.description}</Text>
+                </View>
+                <Text style={styles.black}>
+                    <Text style={styles.label}>Authorization: </Text>
+                    <Text style={styles.white}>{info.private ? "private" : "public"}</Text>
+                </Text>
+                <Text style={styles.text}>
+                    <Text style={styles.label}>Fork: </Text>
+                    <Text style={styles.white}>{info.fork ? "fork" : "not fork"}</Text>
+                </Text>
+                <Text style={styles.text}>
+                    <Text style={styles.label}>Size: </Text>
+                    <Text style={styles.white}>{info.size}</Text>
+                </Text>
+                <Text style={styles.text}>
+                    <Text style={styles.label}>Default Branche Name: </Text>
+                    <Text style={styles.white}>{info.default_branch}</Text>
+                </Text>
+                <View style={{ margin: 20, flex: 1, height: 1, backgroundColor: '#979797' }} />
+                <Text style={styles.header}>Branches</Text>
                 <ScrollView>
                     <FlatList
                         data={Branches}
-                        renderItem={({item}) => {
+                        renderItem={({ item }) => {
                             return <Text style={styles.text}>{item}</Text>
                         }
                         }
                     />
                 </ScrollView>
-                <Text style={styles.title}>Issues</Text>
-                <View style={{marginRight: 20, marginLeft: 20, flex: 1, height: 1, backgroundColor: '#979797'}}/>
+                <View style={{ margin: 20, flex: 1, height: 1, backgroundColor: '#979797' }} />
+                <Text style={styles.header}>Issues</Text>
 
                 <FlatList
                     data={Issues}
-                    renderItem={({item}) => {
-                        return <Pressable style={styles.button} onPress={() => navigation.navigate('IssuesView', {info: item})}>
+                    renderItem={({ item }) => {
+                        return <TouchableOpacity activeOpacity={0.4} style={styles.button} onPress={() => navigation.navigate('IssuesView', { info: item })}>
                             <Text style={styles.text}>{item.title}</Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     }
                     }
                 />
@@ -83,27 +101,41 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000000',
+        backgroundColor: 'black',
     },
     button: {
-        padding:10,
-        margin: 3,
-
-        backgroundColor: '#808080',
+        padding: 10,
+        marginVertical: 5,
+        marginHorizontal: 10,
+        borderRadius: 25,
+        backgroundColor: '#007680',
+    },
+    header: {
+        fontSize: 20,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: 'white',
+        paddingBottom: 10,
     },
     title: {
-        fontSize: 20,
-        margin: 30,
+        color: '#00b5c4',
+        fontSize: 25,
+        textAlign: 'center',
         fontWeight: 'bold',
-        color: '#ffffff',
+        padding: 20,
+    },
+    label: {
+        color: '#00b5c4',
+    },
+    white: {
+        color: 'white',
+    },
+    black: {
+        backgroundColor: 'black',
+        padding: 10,
     },
     text: {
         padding: 10,
-        color: '#ffffff',
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
+        color: 'white',
     },
 });

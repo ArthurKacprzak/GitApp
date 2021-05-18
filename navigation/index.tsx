@@ -17,39 +17,47 @@ import IssuesView from "../screens/IssuesView";
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  return (
-      <NavigationContainer>
-          <Stack.Navigator>
-              <Stack.Screen name="Search" component={Search} options={{ title: 'Search', headerStyle: {
-                      backgroundColor: '#000000',
-                      borderBottomWidth: 2,
-                  },headerTitleStyle: {
-                      fontSize: 18,
-                      color: "#ffffff",
-                  }, }}/>
-              <Stack.Screen name="RepositoriesView" component={RepositoriesView} options={{ title: 'RepositoriesView', headerStyle: {
-                      backgroundColor: '#000000',
-                      borderBottomWidth: 2,
-                  },headerTitleStyle: {
-                      fontSize: 18,
-                      color: "#ffffff",
-                  }, }}/>
-              <Stack.Screen name="UserView" component={UserView} options={{ title: 'UserView', headerStyle: {
-                      backgroundColor: '#000000',
-                      borderBottomWidth: 2,
-                  },headerTitleStyle: {
-                      fontSize: 18,
-                      color: "#ffffff",
-                  }, }}/>
-              <Stack.Screen name="IssuesView" component={IssuesView} options={{ title: 'IssuesView', headerStyle: {
-                      backgroundColor: '#000000',
-                      borderBottomWidth: 2,
-                  },headerTitleStyle: {
-                      fontSize: 18,
-                      color: "#ffffff",
-                  }, }}/>
-          </Stack.Navigator>
-      </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="Search" component={Search} options={{
+                    title: 'Search', headerStyle: {
+                        backgroundColor: '#000000',
+                        borderBottomWidth: 2,
+                    }, headerTitleStyle: {
+                        fontSize: 18,
+                        color: "#ffffff",
+                    },
+                }} />
+                <Stack.Screen name="RepositoriesView" component={RepositoriesView} options={{
+                    title: 'Repository', headerStyle: {
+                        backgroundColor: '#000000',
+                        borderBottomWidth: 2,
+                    }, headerTitleStyle: {
+                        fontSize: 18,
+                        color: "#ffffff",
+                    },
+                }} />
+                <Stack.Screen name="UserView" component={UserView} options={{
+                    title: 'User', headerStyle: {
+                        backgroundColor: '#000000',
+                        borderBottomWidth: 2,
+                    }, headerTitleStyle: {
+                        fontSize: 18,
+                        color: "#ffffff",
+                    },
+                }} />
+                <Stack.Screen name="IssuesView" component={IssuesView} options={{
+                    title: 'Issue', headerStyle: {
+                        backgroundColor: '#000000',
+                        borderBottomWidth: 2,
+                    }, headerTitleStyle: {
+                        fontSize: 18,
+                        color: "#ffffff",
+                    },
+                }} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 

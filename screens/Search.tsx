@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {StyleSheet, ScrollView, TouchableOpacity, Button, TextInput, CheckBox, Pressable} from 'react-native';
-import {Text, View} from '../components/Themed';
+import React, { useState } from 'react';
+import { StyleSheet, ScrollView, TouchableOpacity, Button, TextInput, CheckBox, Pressable } from 'react-native';
+import { Text, View } from '../components/Themed';
 
 import * as WebBrowser from "expo-web-browser";
 import Colors from "../constants/Colors";
-import {NavigationContainer} from "@react-navigation/native";
-import {FlatList} from "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { FlatList } from "react-native-gesture-handler";
 
-function Search({navigation}) {
+function Search({ navigation }) {
 
     const [List, setList] = useState([]);
 
@@ -48,9 +48,9 @@ function Search({navigation}) {
                 }
 
                 setList(page == 0 ? res.items.map((tmp: any) => {
-                    return ({info:tmp, name: tmp.full_name, view:'RepositoriesView'});
+                    return ({ info: tmp, name: tmp.full_name, view: 'RepositoriesView' });
                 }) : List.concat(res.items.map((tmp: any) => {
-                    return ({info:tmp, name: tmp.full_name, view:'RepositoriesView'});
+                    return ({ info: tmp, name: tmp.full_name, view: 'RepositoriesView' });
                 })));
             });
         } else {
@@ -66,15 +66,15 @@ function Search({navigation}) {
                 }
 
                 setList(page == 0 ? res.items.map((tmp: any) => {
-                    return ({info:tmp, name: tmp.login, view:'UserView'});
+                    return ({ info: tmp, name: tmp.login, view: 'UserView' });
                 }) : List.concat(res.items.map((tmp: any) => {
-                    return ({info:tmp, name: tmp.login, view:'UserView'});
+                    return ({ info: tmp, name: tmp.login, view: 'UserView' });
                 })));
 
             });
         }
     }
-    const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
         return layoutMeasurement.height + contentOffset.y >=
             contentSize.height - 100;
     };
@@ -85,16 +85,19 @@ function Search({navigation}) {
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeText}
+                placeholder={"Search"}
             />
-            <Text style={{color: '#ffffff'}}>User : </Text>
-            <CheckBox
-                value={isSelected}
-                onValueChange={setSelection}
-                style={styles.checkbox}
-                tintColors={{ true: '#808080', false: 'black' }}
-            />
+            <View style={styles.next}>
+                <Text style={{ color: '#ffffff' }}>User : </Text>
+                <CheckBox
+                    value={isSelected}
+                    onValueChange={setSelection}
+                    style={styles.checkbox}
+                    tintColors={{ true: '#007680', false: 'black' }}
+                />
+            </View>
             <ScrollView
-                onScroll={({nativeEvent}) => {
+                onScroll={({ nativeEvent }) => {
                     if (isCloseToBottom(nativeEvent) && !Load) {
                         getInfo(MyText, Page + 1);
                     }
@@ -103,10 +106,10 @@ function Search({navigation}) {
             >
                 <FlatList
                     data={List}
-                    renderItem={({item}) => {
-                        return <Pressable style={styles.button} onPress={() => navigation.navigate(item.view, {info: item.info})}>
-                            <Text>{item.name}</Text>
-                        </Pressable>
+                    renderItem={({ item }) => {
+                        return <TouchableOpacity activeOpacity={0.5} style={styles.button} onPress={() => navigation.navigate(item.view, { info: item.info })}>
+                            <Text style={styles.white}>{item.name}</Text>
+                        </TouchableOpacity>
                     }
                     }
                 />
@@ -127,27 +130,29 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        width: 300,
+        width: '80%',
         margin: 10,
         borderWidth: 1,
-        padding:10,
-        backgroundColor: '#808080',
+        padding: 10,
+        backgroundColor: '#292929',
         borderRadius: 10,
+        color: 'white',
     },
     button: {
-        padding:10,
+        padding: 10,
         margin: 3,
-
-        backgroundColor: '#808080',
+        borderRadius: 25,
+        backgroundColor: '#007680',
     },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
+    white: {
+        color: 'white',
+        textAlign: 'center',
     },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
+    next: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000000',
     },
 });
 
