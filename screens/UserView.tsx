@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Button, ScrollView, StyleSheet, Image} from 'react-native';
+import {Button, ScrollView, StyleSheet, Image, Pressable} from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import {useState} from "react";
+import {FlatList} from "react-native-gesture-handler";
 
 export default function UserView({ route, navigation }) {
 
@@ -19,16 +20,7 @@ export default function UserView({ route, navigation }) {
       }).then(res => res.json()).then((res) => {
 
           setToRM(false);
-          setBranches(res.map((tmp: any) => {
-              return (
-                  <View style={styles.button}>
-                      <Button
-                          title={tmp.name}
-                          onPress={() => navigation.navigate('RepositoriesView', {info: tmp})}
-                      />
-                  </View>
-              );
-          }));
+          setBranches(res);
       });
   }
 
@@ -42,9 +34,16 @@ export default function UserView({ route, navigation }) {
                 uri: info.avatar_url,
             }}
         />
-        <ScrollView>
-            {Branches}
-        </ScrollView>
+
+        <FlatList
+            data={Branches}
+            renderItem={({item}) => {
+                return <Pressable style={styles.button} onPress={() => navigation.navigate('RepositoriesView', {info: item})}>
+                    <Text style={styles.text}>{item.name}</Text>
+                </Pressable>
+            }
+            }
+        />
     </View>
   );
 }
@@ -54,18 +53,29 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+      backgroundColor: '#000000',
   },
     tinyLogo: {
         width: 50,
         height: 50,
+        margin: 20,
     },
-  button: {
-    padding:10,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
+    button: {
+        padding:10,
+        margin: 3,
+
+        backgroundColor: '#808080',
+    },
+    title: {
+        fontSize: 20,
+        margin: 30,
+        fontWeight: 'bold',
+        color: '#ffffff',
+    },
+    text: {
+        padding: 10,
+        color: '#ffffff',
+    },
   separator: {
     marginVertical: 30,
     height: 1,
